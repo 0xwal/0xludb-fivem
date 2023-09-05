@@ -1,0 +1,3 @@
+[submodule "ludb"]
+	path = deps/ludb
+	url = git@github.com:0xWaleed/ludb.git
