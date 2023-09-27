@@ -1,0 +1,45 @@
+name: 0xrelease
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Resolve version
+        run: |
+          echo version=$(git tag | sort -V | tail -1) >> $GITHUB_ENV
+
+      - name: Preparing Files
+        run: |
+          mkdir 0xludb-fivem
+          mkdir -p 0xludb-fivem/deps/ludb
+          
+          mv deps/ludb/ludb.lua 0xludb-fivem/deps/ludb/ludb.lua
+          mv *.lua 0xludb-fivem
+          
+          mv README.md 0xludb-fivem
+
+      - name: Add meta files
+        run: |
+          echo "${{vars.IMPORTANT}}" > 0xludb-fivem/IMPORTANT.txt
+
+      - name: Zipping
+        run: |
+          zip -r ./0xludb-fivem-${{ env.version }}.zip 0xludb-fivem
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./0xludb-fivem-${{ env.version }}.zip
+          tag_name: ${{ env.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
