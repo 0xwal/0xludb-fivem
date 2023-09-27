@@ -3,7 +3,7 @@ An easy to use key-value pair database library for FiveM
 
 
 ## API
-### Saving data
+### Saving/Retrieving data
 #### Saving simple data
 ```lua
 local ludb = exports['0xludb-fivem']
@@ -34,16 +34,6 @@ print(data)
 
 ]]
 ```
-
-### Retrieving data
-#### Retrieve a saved value
-```lua
-local ludb = exports['0xludb-fivem']
-ludb:save('the-key', 'the-value')
-local data = ludb:retrieve('the-key')
-print(data.value) -- the-value
-```
-
 
 ### Deleting data
 #### Delete a single value
