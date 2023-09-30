@@ -22,5 +22,3 @@ function kvp_driver()
 
 	return o
 end
-
-ludb_set_driver(kvp_driver())
