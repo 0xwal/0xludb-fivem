@@ -28,7 +28,6 @@ exports('saveGlobal', function(key, value)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	print(('global/%s'):format(key))
 	ludb:save(('global/%s'):format(key), value)
 end)
 
