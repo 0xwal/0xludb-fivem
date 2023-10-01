@@ -67,7 +67,7 @@ print("Player tokens and coordinates saved.")
 local tokens = ludb:retrieve("players/license:123/tokens")
 
 -- Display retrieved tokens
-print("Player Tokens:", tokens.value)
+print("Player Tokens:", tokens)
 
 
 -- Retrieve all player information using wildcard (*)
@@ -103,7 +103,7 @@ print("Global Player tokens and coordinates saved.")
 local globalTokens = ludb:retrieveGlobal("players/license:123/tokens")
 
 -- Display retrieved global tokens
-print("Global Player Tokens:", globalTokens.value)
+print("Global Player Tokens:", globalTokens)
 
 -- Retrieve all global player information using wildcard (*)
 local globalPlayer = ludb:retrieveGlobal("players/license:123/*")
