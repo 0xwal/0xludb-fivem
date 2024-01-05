@@ -71,7 +71,7 @@ print("Player Tokens:", tokens)
 
 
 -- Retrieve all player information using wildcard (*)
-local player = ludb.retrieve("players/license:123/*")
+local player = ludb:retrieve("players/license:123/*")
 
 print(json.encode(player.tokens.value))
 print(json.encode(player.coords.value))
