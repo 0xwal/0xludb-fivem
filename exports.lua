@@ -21,64 +21,88 @@ exports('save', function(key, value)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludb:save(make_key_unique_for_resource(key), value)
+	local name = make_key_unique_for_resource(key)
+	log('save', name, value)
+	ludb:save(name, value)
 end)
 
 exports('saveGlobal', function(key, value)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludb:save(('global/%s'):format(key), value)
+	local name = ('global/%s'):format(key)
+	log('saveGlobal', name, value)
+	ludb:save(name, value)
 end)
 
 exports('saveInMemory', function(key, value)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludbInMemory:save(make_key_unique_for_resource(key), value)
+	local name = make_key_unique_for_resource(key)
+	log('saveInMemory', name, value)
+	ludbInMemory:save(name, value)
 end)
 
 exports('retrieve', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	return ludb:retrieve(make_key_unique_for_resource(key))
+
+	local name  = make_key_unique_for_resource(key)
+	local value = ludb:retrieve(name)
+	log('retrieve', name, value)
+	return value
 end)
 
 exports('retrieveGlobal', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	return ludb:retrieve(('global/%s'):format(key))
+
+	local name  = ('global/%s'):format(key)
+	local value = ludb:retrieve(name)
+	log('retrieveGlobal', name, value)
+	return value
 end)
 
 exports('retrieveFromMemory', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	return ludbInMemory:retrieve(make_key_unique_for_resource(key))
+
+	local name  = make_key_unique_for_resource(key)
+	local value = ludbInMemory:retrieve(name)
+	log('retrieveFromMemory', name, value)
+	return value
 end)
 
 exports('delete', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludb:delete(make_key_unique_for_resource(key))
+
+	local name = make_key_unique_for_resource(key)
+	log('delete', name)
+	ludb:delete(name)
 end)
 
 exports('deleteGlobal', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludb:delete(('global/%s'):format(key))
+	local name = ('global/%s'):format(key)
+	log('deleteGlobal', name)
+	ludb:delete(name)
 end)
-
 
 exports('deleteInMemory', function(key)
 	if type(key) == 'table' then
 		key = transform_array_key(key)
 	end
-	ludbInMemory:delete(make_key_unique_for_resource(key))
+	local name = make_key_unique_for_resource(key)
+	log('deleteInMemory', name)
+	ludbInMemory:delete(name)
 end)
 
 RegisterCommand('0xludb-export', function(serverId)

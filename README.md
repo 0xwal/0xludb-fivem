@@ -43,6 +43,13 @@ Deletes a globally saved value using a key. The key can be a string or a table. 
 
 Exports data to a JSON file when invoked from the server console (serverId 0). This command is typically used to export data for backup or analysis.
 
+
+## Logging
+You can enable logging by executing this command in fx console.
+```
+setr log true
+```
+
 ## Usage Example
 
 You can import the module using:
