@@ -109,7 +109,8 @@ function ludb_disk_export()
 	local time = os.time()
 	local resourceName = GetCurrentResourceName()
 	local fileName = ('dump-%s.json'):format(time)
-	local content = json.encode(ludb:retrieve('*'))
+	local entries = ludb:retrieve('*') or {}
+	local content = json.encode(entries)
 	return SaveResourceFile(resourceName, fileName, content)
 end
 
