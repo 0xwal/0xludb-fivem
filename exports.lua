@@ -168,4 +168,4 @@ RegisterCommand('0xludb-reset', function(serverId)
 	end
 
 	ludb_reset_all()
-end)
+end, true)
