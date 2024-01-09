@@ -105,16 +105,20 @@ exports('deleteInMemory', function(key)
 	ludbInMemory:delete(name)
 end)
 
+function ludb_disk_export()
+	local time = os.time()
+	local resourceName = GetCurrentResourceName()
+	local fileName = ('dump-%s.json'):format(time)
+	local content = json.encode(ludb:retrieve('*'))
+	return SaveResourceFile(resourceName, fileName, content)
+end
+
 RegisterCommand('0xludb-export', function(serverId)
 	print('serverId', serverId, type(serverId))
 	if serverId ~= 0 then
 		return
 	end
-	local time = os.time()
-	local ret  = SaveResourceFile(
-					GetCurrentResourceName(),
-					('dump-%s.json'):format(time),
-					json.encode(ludb:retrieve('*'))
-	)
+
+	local ret = ludb_disk_export()
 	print('ret', ret, type(ret))
 end, true)
