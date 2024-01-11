@@ -137,12 +137,38 @@ exports('deleteAllInMemory', function(key)
 end)
 
 function ludb_disk_export()
-	local time = os.time()
+	local time         = os.time()
 	local resourceName = GetCurrentResourceName()
-	local fileName = ('dump-%s.json'):format(time)
-	local entries = ludb:retrieve('*') or {}
-	local content = json.encode(entries)
+	local fileName     = ('dump-%s.json'):format(time)
+	local entries      = ludb:retrieve('*') or {}
+	local content      = json.encode(entries)
 	return SaveResourceFile(resourceName, fileName, content)
+end
+
+
+function ludb_disk_import_internal(paths, contentAsJson)
+	for k, v in pairs(contentAsJson) do
+		if type(v) == 'table' then
+			table.insert(paths, k)
+			if v.value then
+				local key = table.concat(paths, '/')
+				ludb:save(key, v.value)
+				v.value = nil
+			end
+			ludb_disk_import_internal(paths, v)
+		else
+			local key = table.concat(paths, '/')
+			ludb:save(key, v)
+		end
+	end
+	table.remove(paths)
+end
+
+function ludb_disk_import(fileName)
+	local resourceName  = GetCurrentResourceName()
+	local content       = LoadResourceFile(resourceName, fileName)
+	local contentAsJson = json.decode(content)
+	ludb_disk_import_internal({}, contentAsJson)
 end
 
 function ludb_reset_all()
@@ -160,6 +186,11 @@ RegisterCommand('0xludb-export', function(serverId)
 	print('ret', ret, type(ret))
 end, true)
 
+RegisterCommand('0xludb-import', function(serverId, args)
+	local file = args[1] or error('file path required')
+
+	ludb_disk_import(file)
+end)
 
 RegisterCommand('0xludb-reset', function(serverId)
 	print('serverId', serverId, type(serverId))
