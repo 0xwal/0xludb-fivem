@@ -43,6 +43,11 @@ Deletes a globally saved value using a key. The key can be a string or a table. 
 
 Exports data to a JSON file when invoked from the server console (serverId 0). This command is typically used to export data for backup or analysis.
 
+### Command: `0xludb-import`
+#### Experimental ⚠️
+Import the exported data. `0xludb-import <filename>` 
+
+
 
 ## Logging
 You can enable logging by executing this command in fx console.
